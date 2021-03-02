@@ -7,6 +7,101 @@
 <body>
     <script>
 
+        const user = {
+            name: "Vika",
+            lastName: "Химич",
+            avarageScore: null,
+            scores: {
+                history: 12,
+                biology: 8,
+                english: 32
+            }
+        };
+
+        const deepObjClone = function(obj){
+            const newObj = {};
+            for(const key in obj){
+                const value = obj[key]; 
+                if(typeof value === "object" && value !== null) {
+                    newObj[key] = deepObjClone(value);
+                    /*
+                        const newObj = {};
+                        for(const key in obj){
+                            const value = obj[key]; 
+                            if(typeof value === "object" && value !== null) {
+                            }
+                            else {
+                                newObj[key] = value;
+                            }
+                        }
+                        return newObj;                    
+                    */
+                }
+                else {
+                    newObj[key] = value;
+                }
+            }
+            return newObj;
+        }
+        // массив ссылок на объекты в памяти
+
+        const cloneArrObj = function(arr) {
+            const result = [];
+            for(const obj of arr) {
+                const newObj = deepObjClone(obj);
+                result.push(newObj);
+            }
+            return result;
+        }
+
+        const concatArrObj = function(...arrSum){
+            let result = [];
+            for(const arr of arrSum) {
+                result = [...result, ...cloneArrObj(arr)];
+            }
+            return result;
+        };
+
+        const notebooks = [
+            {
+                name: "Lenovo X120S",
+                price: 12000,
+                discount: null
+            },
+            {
+                name: "Acer Swift 3",
+                price: 18000
+            },
+            {
+                name: "Huawei MateBook D",
+                price: 23000
+            }
+        ];
+
+        const phones = [
+            {
+            name: "iPhone X",
+            price: Infinity
+        },
+        {
+            name: "Xiomi Mi Note",
+            price: 8000
+        }];
+
+        // const products = [...notebooks, ...phones]; // копируем массив ссылок на объекты, а не сами объекты по значению
+        // const products = [];
+        // for(const value of notebooks) {
+        //     const newValue = {...value};
+        //     products.push(newValue);
+        // }
+        // for(const value of phones) {
+        //     const newValue = {...value};
+        //     products.push(newValue);
+        // }
+        const products = concatArrObj(notebooks, phones);
+        phones[0].price = "1 душа";
+        console.log(phones)
+        console.log(products);
     </script>
 </body>
 </html>

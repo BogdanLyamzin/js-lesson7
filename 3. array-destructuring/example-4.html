@@ -6,7 +6,12 @@
 </head>
 <body>
     <script>
+        const userFIO = prompt("Введите ФИО");
+        const fioArr = userFIO.split(" ");
+        const [userLastName, ...userLastInfo] = fioArr;
 
+       console.log(userLastName);
+       console.log(userLastInfo);
     </script>
 </body>
 </html>
